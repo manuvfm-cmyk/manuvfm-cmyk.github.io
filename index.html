@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manuel Villegas · Operations &amp; Automation</title>
+<meta name="description" content="Manuel Villegas: operations and automation portfolio. Receipt robot, P&L audit, AI service agent and HubSpot lead enrichment.">
+<style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+/* Layout: one engineering drawing sheet. Border frame, four "details" in a 2x2 grid, a general-notes column, and a title block in the bottom-right corner. Red pencil = markups and flags. */
+/* Single light theme by choice: white page, black ink, greys only, Arial throughout. */
+:root{
+  --paper:#FFFFFF; --sheet:#FFFFFF; --ink:#000000; --ink2:#555555; --rule:#000000; --hair:#D9D9D9; --grid:#FFFFFF;
+  --red:#000000; --red-soft:#F2F2F2; --fill:#F5F5F5; color-scheme:light;
+  --letter:Arial,Helvetica,sans-serif;
+  --body:Arial,Helvetica,sans-serif;
+  --mono:Arial,Helvetica,sans-serif;
+}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:.95rem;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 32px}
+p{margin:0}
+a{color:inherit}
+code,.mono{font-family:var(--mono);font-size:.8em}
+
+.sheet{max-width:1180px;margin:0 auto;background:var(--sheet);border:2px solid var(--rule);
+  display:grid;grid-template-columns:minmax(0,1fr) 300px;grid-template-areas:"head head" "main notes" "main title"}
+@media (max-width:900px){.sheet{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "main" "notes" "title"}}
+
+.lettering{font-family:var(--letter);text-transform:uppercase;letter-spacing:.06em}
+.head{grid-area:head;border-bottom:2px solid var(--rule);padding:18px 22px 16px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 24px}
+.head h1{font-family:var(--letter);font-weight:700;font-size:clamp(1.7rem,3.6vw,2.6rem);line-height:1;letter-spacing:.01em;margin:0;text-wrap:balance;max-width:24ch}
+.head .who{font-family:var(--letter);font-size:1rem;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;text-align:right}
+.head .who b{display:block;color:var(--ink);font-size:1.35rem;letter-spacing:.04em}
+
+.main{grid-area:main;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-right:2px solid var(--rule)}
+@media (max-width:900px){.main{border-right:0;border-bottom:2px solid var(--rule)}}
+@media (max-width:640px){.main{grid-template-columns:minmax(0,1fr)}}
+.detail{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;min-width:0;border-bottom:1px solid var(--rule)}
+.detail:nth-child(odd){border-right:1px solid var(--rule)}
+.detail:nth-last-child(-n+2){border-bottom:0}
+@media (max-width:640px){.detail:nth-child(odd){border-right:0}.detail:nth-last-child(2){border-bottom:1px solid var(--rule)}}
+.dtag{display:flex;align-items:center;gap:10px}
+.bubble{flex:none;width:34px;height:34px;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center;font-family:var(--letter);font-weight:700;font-size:1.05rem;background:var(--sheet)}
+.dtag h2{font-family:var(--letter);font-weight:700;font-size:1.15rem;line-height:1.1;text-transform:uppercase;letter-spacing:.04em;margin:0}
+.dtag small{display:block;font-family:var(--mono);font-size:.68rem;color:var(--ink2);letter-spacing:0;text-transform:none;font-weight:400;margin-top:2px}
+.detail p{color:var(--ink2);max-width:62ch}
+.detail p strong{color:var(--ink);font-weight:600}
+
+/* mini flow */
+.flow{overflow-x:auto}
+.flow svg{display:block;min-width:400px;width:100%;height:auto}
+.fb{fill:var(--sheet);stroke:var(--ink);stroke-width:1.1}
+.fb.fix{stroke:var(--red);stroke-width:1.6}
+.ft{fill:var(--ink);font-family:var(--letter);font-size:9.5px;font-weight:700;letter-spacing:0}
+.fs{fill:var(--ink2);font-family:var(--mono);font-size:8px}
+.fe{stroke:var(--ink);stroke-width:1;fill:none}
+.fr{fill:var(--red);font-family:var(--letter);font-size:10.5px;font-weight:600;letter-spacing:.04em}
+.cloud{fill:none;stroke:var(--red);stroke-width:1.2;stroke-dasharray:3 2}
+
+.fixlist{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px;font-size:.88rem}
+.fixlist li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:6px;color:var(--ink2)}
+.tri{font-family:var(--letter);font-weight:700;color:var(--red);font-size:.85rem}
+.urlfix{font-family:var(--mono);font-size:.74rem;border:1px solid var(--hair);background:var(--fill);padding:6px 8px;overflow-x:auto;white-space:nowrap}
+.urlfix .bad{color:var(--red);text-decoration:line-through}
+.urlfix .good{font-weight:500}
+
+/* audit mini table */
+.tbl{overflow-x:auto;border:1px solid var(--ink)}
+.tbl table{border-collapse:collapse;width:100%;min-width:400px;font-size:.8rem;font-variant-numeric:tabular-nums}
+.tbl th,.tbl td{padding:4px 7px;border-bottom:1px solid var(--hair);text-align:right}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl td,.tbl th{white-space:nowrap}
+.tbl th{font-family:var(--letter);text-transform:uppercase;letter-spacing:.06em;font-weight:600;font-size:.72rem;background:var(--fill)}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tr.mk td{background:var(--red-soft)}
+.mark{font-family:var(--letter);font-weight:600;color:var(--red);letter-spacing:.04em;text-transform:uppercase;font-size:.72rem;white-space:nowrap}
+.cap{font-family:var(--mono);font-size:.66rem;color:var(--ink2)}
+
+.runs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--ink)}
+.runs span{padding:4px 5px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;text-align:center;line-height:1.2}
+.runs span+span{border-left:1px solid var(--ink)}
+.task{border:1px dashed var(--ink);padding:8px 10px;display:flex;flex-direction:column;gap:3px;font-size:.85rem}
+.task p{color:var(--ink2)}
+.task .k{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2)}
+/* agent mini */
+.agent{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.2fr);gap:8px;align-items:center;font-size:.78rem}
+.agent .col{display:flex;flex-direction:column;gap:4px}
+.agent span.b{border:1px solid var(--ink);padding:2px 6px;background:var(--sheet);font-family:var(--letter);text-transform:uppercase;letter-spacing:.04em}
+.agent span.b.h{border-color:var(--red);color:var(--red)}
+.agent .core{border:2px solid var(--ink);padding:10px 8px;text-align:center;font-family:var(--letter);font-weight:700;text-transform:uppercase;background:var(--sheet)}
+.agent .arrow{font-family:var(--mono);color:var(--ink2);text-align:center}
+
+.steps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:3px;font-size:.88rem;color:var(--ink2)}
+.steps li::marker{font-family:var(--mono);font-size:.75rem;color:var(--ink)}
+.status{display:inline-block;font-family:var(--letter);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:.72rem;color:var(--red);border:1.2px solid var(--red);padding:0 6px;}
+
+/* notes column */
+.notes{grid-area:notes;padding:16px 18px;display:flex;flex-direction:column;gap:14px;background:var(--sheet)}
+.notes h3{font-family:var(--letter);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.95rem;margin:0;border-bottom:1px solid var(--rule);padding-bottom:3px}
+.notes ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:.84rem;color:var(--ink2)}
+.notes ol li::marker{font-family:var(--mono);color:var(--ink);font-size:.75rem}
+.notes ol strong{color:var(--ink);font-weight:600}
+.figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--rule)}
+.figs div{padding:6px 6px 7px;display:flex;flex-direction:column;gap:1px;min-width:0}
+.figs div+div{border-left:1px solid var(--rule)}
+.figs b{font-family:var(--letter);font-weight:700;font-size:1.3rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.figs span{font-size:.68rem;line-height:1.25;color:var(--ink2)}
+
+/* title block */
+.title{grid-area:title;border-top:2px solid var(--rule);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));font-size:.78rem;background:var(--sheet)}
+.title div{padding:5px 8px;border-bottom:1px solid var(--rule);display:flex;flex-direction:column;min-width:0}
+.title div:nth-child(odd){border-right:1px solid var(--rule)}
+.title .wide{grid-column:1/-1;border-right:0!important}
+.title div:last-child{border-bottom:0}
+.title .k{font-family:var(--letter);text-transform:uppercase;letter-spacing:.08em;font-size:.66rem;color:var(--ink2)}
+.title .v{font-family:var(--mono);font-size:.76rem;overflow-wrap:anywhere}
+.title .v.big{font-family:var(--letter);font-weight:700;font-size:1.1rem;letter-spacing:.03em}
+.copy{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.copy button{font-family:var(--letter);text-transform:uppercase;letter-spacing:.06em;font-size:.68rem;border:1px solid var(--ink);background:var(--sheet);color:var(--ink);padding:1px 6px;cursor:pointer}
+.copy button:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+#addr{user-select:all}
+</style>
+</head>
+<body>
+
+
+<div class="sheet">
+  <header class="head">
+    <h1>I turn manual back-office work into systems that run on their own.</h1>
+    <div class="who"><b>Manuel Villegas</b>Operations &amp; automation · Hamburg</div>
+  </header>
+
+  <main class="main">
+    <!-- A -->
+    <section class="detail" aria-labelledby="dA">
+      <div class="dtag"><span class="bubble">A</span><h2 id="dA">Receipt robot, 28 restaurants<small>n8n · Airtop browser · LLM extraction · JS · ran in production</small></h2></div>
+      <p>Supplier receipts sat behind a member login with no API. Someone logged in for every restaurant and emailed each PDF to bookkeeping. <strong>Now an n8n workflow drives a real browser every second night at 02:00</strong> and sends the three newest receipts per account.</p>
+      <div class="flow">
+        <svg viewBox="0 0 520 86" role="img" aria-label="Schedule, start session, open receipts, click Request, extract links, clean and decode, navigate three times, end session. The last three were added while debugging.">
+          <g>
+            <path class="fe" d="M58 42h6M122 42h6M186 42h6M250 42h6M314 42h6M378 42h6M442 42h6"/>
+          </g>
+          <g font-size="0">
+            <rect class="fb" x="2" y="22" width="56" height="40"/><text class="ft" x="8" y="39">SCHEDULE</text><text class="fs" x="8" y="53">2d · 02:00</text>
+            <rect class="fb" x="66" y="22" width="56" height="40"/><text class="ft" x="72" y="39">SESSION</text><text class="fs" x="72" y="53">saved login</text>
+            <rect class="fb" x="130" y="22" width="56" height="40"/><text class="ft" x="136" y="39">OPEN</text><text class="fs" x="136" y="53">/receipts</text>
+            <rect class="fb" x="194" y="22" width="56" height="40"/><text class="ft" x="200" y="39">REQUEST</text><text class="fs" x="200" y="53">last 30 d</text>
+            <rect class="fb fix" x="258" y="22" width="56" height="40"/><text class="ft" x="264" y="39">QUERY</text><text class="fs" x="264" y="53">3 links</text>
+            <rect class="fb fix" x="322" y="22" width="56" height="40"/><text class="ft" x="328" y="39">CODE</text><text class="fs" x="328" y="53">parse·fix</text>
+            <rect class="fb fix" x="386" y="22" width="56" height="40"/><text class="ft" x="392" y="39">OPEN ×3</text><text class="fs" x="392" y="53">send PDFs</text>
+            <rect class="fb" x="450" y="22" width="56" height="40"/><text class="ft" x="456" y="39">END</text><text class="fs" x="456" y="53">save login</text>
+            <rect class="cloud" x="252" y="16" width="196" height="52" rx="10"/>
+            <text class="fr" x="262" y="11">REV B · ADDED WHILE DEBUGGING</text>
+          </g>
+        </svg>
+      </div>
+      <ol class="fixlist">
+        <li><span class="tri">Δ1</span><span>Clicks and browser prompts failed at night. Read the "Email as PDF" links and open them directly instead.</span></li>
+        <li><span class="tri">Δ2</span><span>The model wrapped its JSON in markdown. A Code node now strips it, parses it and splits one item per receipt.</span></li>
+        <li><span class="tri">Δ3</span><span>Runs "succeeded" with empty PDFs. Compared three URLs and found the date encoded twice:</span></li>
+      </ol>
+      <div class="urlfix" role="region" aria-label="URL fix" tabindex="0">purchase-date=2026<span class="bad">%252F</span>03… → 2026<span class="good">%2F</span>03… &nbsp;fixed with <code>decodeURIComponent()</code></div>
+    </section>
+
+    <!-- B -->
+    <section class="detail" aria-labelledby="dB">
+      <div class="dtag"><span class="bubble">B</span><h2 id="dB">P&amp;L audit, 5 runs a month<small>n8n · QuickBooks API · monday.com · ran in production</small></h2></div>
+      <p>Sales swing, and costs swing with them, so dollar amounts can't tell you if a P&amp;L is right. <strong>The workflow measured every line as a % of total income and compared it with that line's share over the previous 12 months</strong>, using a deviation formula to flag what moved out of line.</p>
+      <div class="runs" aria-label="Run schedule">
+        <span>End wk 1</span><span>End wk 2</span><span>End wk 3</span><span>End wk 4</span><span>Last day of month</span>
+      </div>
+      <p>Each run compared like with like: week 2 month-to-date against week 2 month-to-date across the past year.</p>
+      <div class="tbl" role="region" aria-label="Sample audit output" tabindex="0">
+        <table>
+          <thead><tr><th>Line · % of income</th><th>MTD</th><th>12-mo avg</th><th>Dev.</th><th>Flag</th></tr></thead>
+          <tbody>
+            <tr class="mk"><td>Beer COGS</td><td>0.4%</td><td>1.6%</td><td>−1.2 pts</td><td><span class="mark">Likely miscoded</span></td></tr>
+            <tr class="mk"><td>Wine COGS</td><td>4.6%</td><td>3.1%</td><td>+1.5 pts</td><td><span class="mark">Kegs as wine?</span></td></tr>
+            <tr class="mk"><td>Hourly labor</td><td>23.0%</td><td>20.8%</td><td>+2.2 pts</td><td><span class="mark">Real change</span></td></tr>
+            <tr class="mk"><td>Linen</td><td>0.0%</td><td>0.5%</td><td>−0.5 pts</td><td><span class="mark">Missing bill</span></td></tr>
+            <tr><td>Food COGS</td><td>24.0%</td><td>23.6%</td><td>+0.4 pts</td><td>In range</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="task" aria-label="Sample monday.com task">
+        <span class="k">→ monday.com task · assigned to the client's account manager</span>
+        <p><strong>Wine COGS +1.5 pts vs. 12-month average, week 2.</strong></p>
+        <p><strong>Possible cause:</strong> keg bills from the beer distributor coded to Wine COGS.</p>
+        <p><strong>Suggested fix:</strong> recode this week's distributor bills to Beer COGS; the next run confirms it.</p>
+      </div>
+      <p class="cap">Sample restaurant and figures. Real catches included beer kegs booked as wine at two restaurants and a draft beer that sold nightly with zero purchases, because another beer was on that tap.</p>
+    </section>
+
+    <!-- C -->
+    <section class="detail" aria-labelledby="dC">
+      <div class="dtag"><span class="bubble">C</span><h2 id="dC">AI service agent<small>n8n AI Agent · sub-workflows as tools · architecture + QuickBooks tool built</small></h2></div>
+      <p>Clients asked the same questions every week. <strong>One agent answers from the client's own books and hands everything else to a person.</strong> Each capability is a separate sub-workflow, so it can be tested and fixed on its own.</p>
+      <div class="agent" aria-label="Agent architecture">
+        <div class="col"><span class="b">Email</span><span class="b">WhatsApp</span><span class="b">Web chat</span></div>
+        <div class="core">AI<br>agent</div>
+        <div class="col"><span class="b">QuickBooks reports</span><span class="b">Documents</span><span class="b">Benchmarks</span><span class="b h">Escalate to a person</span></div>
+      </div>
+      <p>Raw API calls to QuickBooks kept failing, so I moved to n8n's native QuickBooks node. Simpler to maintain beat more flexible.</p>
+    </section>
+
+    <!-- D -->
+    <section class="detail" aria-labelledby="dD">
+      <div class="dtag"><span class="bubble">D</span><h2 id="dD">HubSpot lead enrichment<small>HubSpot CRM API · n8n · Claude API · built for this application</small></h2></div>
+      <p>HubSpot is the one tool in this role I haven't run, so I built on it. <span class="status">Demo in progress</span></p>
+      <ol class="steps">
+        <li>Every 15 min, find new contacts not yet enriched.</li>
+        <li>Read the company homepage; continue if it fails or the email is personal.</li>
+        <li>Claude returns segment, fit score 0–100, summary and next step as JSON.</li>
+        <li>A Code node validates it. Bad output goes to a review list, never the CRM.</li>
+        <li>Write fields back; promote fit ≥ 70 from lead to MQL.</li>
+      </ol>
+    </section>
+  </main>
+
+  <aside class="notes">
+    <div class="figs" aria-label="Key figures">
+      <div><b>19→48</b><span>client restaurants, intern to partner</span></div>
+      <div><b>$300K</b><span>a year saved for clients</span></div>
+      <div><b>28</b><span>accounts on the receipt robot</span></div>
+    </div>
+    <div>
+      <h3>General notes</h3>
+      <ol>
+        <li><strong>Reconstruction.</strong> The originals are owned by the company I previously worked at. I rebuilt them from my own notes with sample names and numbers. The logic and fixes are mine.</li>
+        <li><strong>Automate 80–90%, queue the rest.</strong> A short exception list a person clears in minutes beats a brittle "fully automatic" flow.</li>
+        <li><strong>Fix the data before the dashboard.</strong> Clean categories first, or reports spread the error faster.</li>
+        <li><strong>Debug with evidence.</strong> Compare what the system sent with a known good case, field by field.</li>
+        <li><strong>Write it down.</strong> A workflow isn't done until it has a note: what it does, when it runs, who to ask.</li>
+      </ol>
+    </div>
+    <div>
+      <h3>First 90 days at Kubermatic</h3>
+      <ol>
+        <li><strong>30:</strong> audit the HubSpot portal, map integrations and where data breaks, rank manual tasks by hours lost.</li>
+        <li><strong>60:</strong> define lifecycle stages and routing once, verify GA4 tracking, ship the first automation.</li>
+        <li><strong>90:</strong> documented data model, a recurring data-quality check like the P&amp;L audit that turns flags into owned tasks, enrichment live.</li>
+      </ol>
+    </div>
+  </aside>
+
+  <footer class="title" aria-label="Title block">
+    <div class="wide"><span class="k">Drawn by</span><span class="v big">Manuel Villegas</span></div>
+    <div><span class="k">Discipline</span><span class="v">Ops · automation</span></div>
+    <div><span class="k">Training</span><span class="v">B.S. Civil Eng., SDSU</span></div>
+    <div><span class="k">Languages</span><span class="v">ES · EN · DE (A2)</span></div>
+    <div><span class="k">Location</span><span class="v">→ Hamburg</span></div>
+    <div class="wide"><span class="k">Contact</span><span class="copy"><span class="v" id="addr">manuvfm@gmail.com</span><button type="button" id="copy">Copy</button><span class="v" id="copied" aria-live="polite"></span></span></div>
+    <div><span class="k">Sheet</span><span class="v">1 of 1</span></div>
+    <div><span class="k">Rev</span><span class="v">B · Oct 2026</span></div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var b=document.getElementById("copy"),a=document.getElementById("addr"),o=document.getElementById("copied");
+  b.addEventListener("click",function(){
+    var sel=function(){var r=document.createRange();r.selectNodeContents(a);var s=window.getSelection();s.removeAllRanges();s.addRange(r);o.textContent="selected"};
+    try{navigator.clipboard.writeText(a.textContent).then(function(){o.textContent="copied"},sel)}catch(e){sel()}
+  });
+})();
+</script>
+
+</body>
+</html>
